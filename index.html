@@ -1,0 +1,358 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="author" content="Praveen WebArtisan">
+        <meta name="description" content="One of the best API testing tool">
+
+        <title>Sonar API Testing Tool</title>
+
+        <script src="/assets/js/jquery.min.js"></script>
+
+        <style>
+            html, body {
+                padding: 0;
+                margin: 0;
+            }
+
+            body {
+                min-height: 100vh;
+                height: 100vh;
+                max-height: auto;
+                background-color: #eeeeee;
+                font-family: BlinkMacSystemFont,-apple-system,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+            }
+
+            .app-header {
+                width: 100%;
+                height: 3rem;
+                margin-bottom: 0.2rem;
+                background-color: #000;
+                color: #fff;
+                display: flex;
+                align-items: center;
+                box-shadow: 0px 0px 16px #000;
+                cursor: pointer;
+                user-select: none;
+            }
+
+            .app-header > .app-header-content {
+                padding: 0 0.5rem;
+            }
+
+            .app-header a {
+                text-decoration: none;
+                color: inherit;
+            }
+
+            .app-body {
+                height: calc(100% - (3rem + 2rem + 0.2rem));
+            }
+
+            .app-body .app-sidebar {
+                float: left;
+                width: 30%;
+                height: 100%;
+                box-shadow: -3px -10px 10px;
+            }
+
+            .app-body .app-content {
+                float: left;
+                width: 70%;
+                height: 100%;
+            }
+
+            .app-content .window-group {
+                width: 100%;
+                height: 100%;
+            }
+
+            .window-group .window-headers {
+                width: 100%;
+                height: 2rem;
+                cursor: default;
+                user-select: none;
+            }
+
+            .window-group .window-headers > div {
+                width: 10rem;
+                height: 100%;
+                background-color: transparent;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                float: left;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .window-group .window-headers > div.active {
+                background-color: #fff;
+            }
+
+            .window-group .window-contents {
+                width: calc(100% - (0.4rem));
+                height: calc(100% - (2rem + 0.4rem));
+            }
+
+            .window-group .window-contents > div {
+                background-color: #fff;
+                height: 100%;
+                padding: 0.2rem;
+            }
+
+            .window-group .window-contents > div:not(.active) {
+                display: none;
+            }
+
+            .app-footer {
+                width: 100%;
+                height: 2rem;
+                background-color: #e0e0e0;
+                display: flex;
+                align-items: center;
+            }
+
+            .frm-request {
+                display: flex;
+                width: 100%;
+            }
+
+            .frm-request > .txt-group {
+                flex-grow: 1;
+                margin-right: 0.2rem;
+                display: flex;
+            }
+
+            .txt-group > input {
+                flex-grow: 1;
+                margin-left: 0.2rem;
+            }
+
+            .frm-request > .button-group {
+                width: auto;
+            }
+
+            .tab-group {
+                width: 100%;
+            }
+
+            .tab-group .tab-headers {
+                cursor: pointer;
+                user-select: none;
+            }
+
+            .tab-group .tab-headers,
+            .tab-group .tab-contents {
+                width: 100%;
+                display: flex;
+            }
+
+            .tab-group .tab-headers > div {
+                padding: 0.2rem 0.6rem;
+                background-color: transparent;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                float: left;
+                border-bottom: 2px solid transparent;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .tab-group .tab-headers > div.active {
+                border-bottom-color: #000;
+            }
+
+            .tab-group .tab-contents {
+                border-top: 1px solid #e0e0e0;
+            }
+
+            .tab-group .tab-contents > div {
+                padding: 0.2rem;
+            }
+
+            .tab-group .tab-contents > div:not(.active) {
+                display: none;
+            }
+
+            .response {
+                width: 100%;
+                padding: 0.4rem;
+                background: linear-gradient(#e0e0e0, #fff);
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="app-header">
+            <div class="app-header-content">
+                <a href="">Sonar API Testing Tool</a>
+            </div>
+        </div>
+
+        <div class="app-body">
+            <div class="app-sidebar"></div>
+            <div class="app-content">
+                <div class="window-group">
+                    <div class="window-headers">
+                        <div class="active" data-target="window-1">Tab 1</div>
+                        <div class="" data-target="window-2">Tab 2</div>
+                    </div>
+                    <div class="window-contents">
+                        <div class="active" id="window-1">
+                            <div>
+                                <form class="frm-request">
+                                    <div class="txt-group">
+                                        <select class="dd-method">
+                                            <option value="get">GET</option>
+                                            <option value="post">POST</option>
+                                        </select>
+                                        <input type="text" class="txt-url">
+                                    </div>
+                                    <div class="button-group">
+                                        <button>Send</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div>
+                                <div class="tab-group">
+                                    <div class="tab-headers">
+                                        <div class="active" data-target="tab-1-1">Headers</div>
+                                        <div data-target="tab-1-2">Body</div>
+                                    </div>
+                                    <div class="tab-contents">
+                                        <div class="active" id="tab-1-1">Headers content</div>
+                                        <div id="tab-1-2">Body content</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h2>Response</h2>
+                            </div>
+                            <div class="response"></div>
+                        </div>
+                        <div class="" id="window-2">
+                            <div>Tab 2 content</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <div class="app-footer">
+            <!--  -->
+        </div>
+
+        <script>
+            (function($) {
+                let allowedHTTPMethods = ['get', 'post'];
+
+                $(document).on('click', '.window-headers > div:not(.active)', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    let windowHeaders = $(this).closest('.window-headers');
+                    let windowGroup = windowHeaders.closest('.window-group');
+
+                    windowGroup.children('.window-contents').children('#' + windowHeaders.children('.active').attr('data-target')).removeClass('active');
+                    windowHeaders.children('.active').removeClass('active');
+
+                    windowGroup.children('.window-contents').children('#' + $(this).attr('data-target')).addClass('active');
+                    $(this).addClass('active');
+                });
+
+                $(document).on('click', '.tab-headers > div:not(.active)', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    let tabHeaders = $(this).closest('.tab-headers');
+                    let tabGroup = tabHeaders.closest('.tab-group');
+
+                    tabGroup.children('.tab-contents').children('#' + tabHeaders.children('.active').attr('data-target')).removeClass('active');
+                    tabHeaders.children('.active').removeClass('active');
+
+                    tabGroup.children('.tab-contents').children('#' + $(this).attr('data-target')).addClass('active');
+                    $(this).addClass('active');
+                });
+
+                function processHTTPResponse(form, response, error = false) {
+                    if (response) {
+                        if (typeof(response) == 'object') {
+                            form.find('.response').html(JSON.stringify(response, null, 4));
+                        } else {
+                            form.find('.response').html(response);
+                        }
+                    } else if (error) {
+                        if (typeof(error) == 'object') {
+                            form.find('.response').html(JSON.stringify(error, null, 4));
+                        } else {
+                            form.find('.response').html(error);
+                        }
+                    }
+                }
+
+                $(document).on('submit', '.frm-request', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    let form = $(this);
+                    let url = form.find('.txt-url').val();
+                    let method = form.find('.dd-method').val();
+
+                    if (url && url.trim().length > 0) {
+                        try {
+                            url = new URL(url);
+
+                            if (url && url.href) {
+                                url = url.href;
+                            } else {
+                                return;
+                            }
+                        } catch(err) {
+                            console.error(err);
+                            return;
+                        }
+                    } else {
+                        return;
+                    }
+
+                    if (method && method.trim().length > 0 && allowedHTTPMethods.indexOf(method) > -1) {
+                        //
+                    } else {
+                        return;
+                    }
+
+                    let request = $.ajax({
+                        beforeSend: (settings) => {
+                            //
+                        },
+                        url: url,
+                        method: method,
+                        headers: {
+                            'Access-Control-Allow-Origin': location.origin,
+                        },
+                        type: 'json',
+                        success: (res) => {
+                            processHTTPResponse(form, res);
+                        },
+                    });
+
+                    request
+                        .done((res) => {
+                            //
+                        })
+                        .fail((xhr, err) => {
+                            processHTTPResponse(form, xhr.responseJSON ?? {}, xhr);
+                        });
+                });
+
+            })(jQuery);
+        </script>
+    </body>
+</html>
